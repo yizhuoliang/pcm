@@ -20,7 +20,6 @@ int main() {
     }
 
     // might need to figure out which other application was using the PMUs
-    m->resetPMU();
 
     // Check if the specified core is within the valid range
     if (CORE_TO_MONITOR >= m->getNumCores()) {

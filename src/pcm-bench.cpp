@@ -19,8 +19,6 @@ int main() {
         return -1;
     }
 
-    m->resetPMU();
-
     // Pinning the process to core 0
     cpu_set_t cpuset;
     CPU_ZERO(&cpuset);
