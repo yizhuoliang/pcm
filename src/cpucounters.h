@@ -1697,6 +1697,10 @@ public:
     */
     void getAllCounterStates(SystemCounterState & systemState, std::vector<SocketCounterState> & socketStates, std::vector<CoreCounterState> & coreStates, const bool readAndAggregateSocketUncoreCounters = true);
 
+    /*! \brief Poll the core counters only
+    */
+   void PCM::getCoreCounterStates(std::vector<CoreCounterState> & coreStates);
+
     /*! \brief Reads uncore counter states (including system and sockets) but no core counters
 
     \param systemState system counter state (return parameter)

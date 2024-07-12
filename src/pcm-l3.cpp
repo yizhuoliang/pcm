@@ -19,6 +19,9 @@ int main() {
         return -1;
     }
 
+    // might need to figure out which other application was using the PMUs
+    m->resetPMU();
+
     // Check if the specified core is within the valid range
     if (CORE_TO_MONITOR >= m->getNumCores()) {
         std::cerr << "Core " << CORE_TO_MONITOR << " is out of the range of available cores." << std::endl;
@@ -33,17 +36,15 @@ int main() {
 
     while (1) {
         std::vector<CoreCounterState> cstates1, cstates2;
-        std::vector<SocketCounterState> sktstate1, sktstate2;
-        SystemCounterState sstate1, sstate2;
 
         // Get initial state
-        m->getAllCounterStates(sstate1, sktstate1, cstates1);
+        m->getCoreCounterStates(cstates1);
 
         // Wait for the polling interval
         sleep(POLL_INTERVAL);
 
         // Get new state after interval
-        m->getAllCounterStates(sstate2, sktstate2, cstates2);
+        m->getCoreCounterStates(cstates2);
 
         // Calculate L3 cache misses for the specific core
         uint64 l3CacheMisses = getL3CacheMisses(cstates1[CORE_TO_MONITOR], cstates2[CORE_TO_MONITOR]);
