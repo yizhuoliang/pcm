@@ -6715,7 +6715,7 @@ void PCM::getCoreCounterStates(std::vector<CoreCounterState> & coreStates)
             std::packaged_task<void()> task([this, &coreStates, core]() -> void
             {
                 coreStates[core].readAndAggregate(MSR[core]);  // Read and aggregate the MSR data for the core
-                readMSRs(MSR[core], threadMSRConfig, coreStates[core]);  // Additional MSR reads can be defined as needed
+                // readMSRs(MSR[core], threadMSRConfig, coreStates[core]);  // Additional MSR reads can be defined as needed
             });
 
             // Store the future object to wait for all tasks later
