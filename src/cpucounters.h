@@ -1699,7 +1699,7 @@ public:
 
     /*! \brief Poll the core counters only
     */
-   void PCM::getCoreCounterStates(std::vector<CoreCounterState> & coreStates);
+    void getCoreCounterStates(std::vector<CoreCounterState> & coreStates);
 
     /*! \brief Reads uncore counter states (including system and sockets) but no core counters
 
