@@ -6704,32 +6704,14 @@ void PCM::getCoreCounterStates(std::vector<CoreCounterState> & coreStates)
     coreStates.clear();
     coreStates.resize(num_cores);
 
-    // Prepare a vector to store future results for asynchronous execution
-    std::vector<std::future<void>> asyncCoreResults;
-
-    // Loop through each core and set up tasks to read core counters
+    // Loop through each core and perform operations directly
     for (int core = 0; core < num_cores; ++core)
     {
         if (isCoreOnline(core))  // Check if the core is online before polling its counters
         {
-            std::packaged_task<void()> task([this, &coreStates, core]() -> void
-            {
-                coreStates[core].readAndAggregate(MSR[core]);  // Read and aggregate the MSR data for the core
-                readMSRs(MSR[core], threadMSRConfig, coreStates[core]);  // Additional MSR reads can be defined as needed
-            });
-
-            // Store the future object to wait for all tasks later
-            asyncCoreResults.push_back(task.get_future());
-
-            // Enqueue the task into the corresponding core's task queue
-            coreTaskQueues[core]->push(task);
+            coreStates[core].readAndAggregate(MSR[core]);  // Read and aggregate the MSR data for the core
+            readMSRs(MSR[core], threadMSRConfig, coreStates[core]);  // Additional MSR reads can be defined as needed
         }
-    }
-
-    // Wait for all the tasks to complete
-    for (auto & result : asyncCoreResults)
-    {
-        result.wait();
     }
 }
 

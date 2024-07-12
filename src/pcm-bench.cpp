@@ -32,8 +32,9 @@ int main() {
     auto endTime = startTime + std::chrono::seconds(POLL_INTERVAL);
     int iterations = 0;
 
+    std::vector<CoreCounterState> cstates;
+    
     while (std::chrono::high_resolution_clock::now() < endTime) {
-        std::vector<CoreCounterState> cstates;
         m->getCoreCounterStates(cstates); // Call the measurement function
         iterations++;
     }
